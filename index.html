@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para ti 💌</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffe0ec, #e0f7ff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+      color: #333;
+      margin: 0;
+    }
+
+    .card, .carta, .pregunta {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      max-width: 700px;
+      width: 90%;
+      line-height: 1.7;
+      margin: 20px 0;
+    }
+
+    h1 {
+      color: #d6336c;
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 20px;
+      margin: 20px auto;
+      display: block;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff7aa2;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #e85a88;
+    }
+
+    .respuesta {
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #444;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .error-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      background-color: #ff3b3b;
+      color: white;
+      padding: 0.7rem;
+      font-weight: bold;
+      display: none;
+      z-index: 1000;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="error-bar" id="errorBar">😓 Uy... parece que algo no va bien...</div>
+
+  <div class="card" id="pregunta1">
+    <h1>Hola, preciosa 💖</h1>
+    <p>Esta es una pequeña página hecha solo para ti. Quiero que navegues por cada pregunta como si fueran pasos que llevan directo a mi corazón.</p>
+    <img src="1000064051.jpg" alt="Nosotros">
+    <p><strong>¿Sabes cuánto me importas?</strong></p>
+    <button onclick="mostrarRespuesta('respuesta1', 'Mucho más de lo que crees 😌')">Sí</button>
+    <button onclick="mostrarRespuesta('respuesta1', 'Pues prepárate para enterarte 💫')">No</button>
+    <div class="respuesta hidden" id="respuesta1"></div>
+  </div>
+
+  <div class="card hidden" id="pregunta2">
+    <p><strong>¿Te has dado cuenta de lo especial que eres para mí?</strong></p>
+    <button onclick="mostrarRespuesta('respuesta2', 'Y eso que aún no has visto todo lo que siento 💭')">Sí</button>
+    <button onclick="mostrarRespuesta('respuesta2', 'Entonces te lo recuerdo con cada detalle de esto 💐')">No</button>
+    <div class="respuesta hidden" id="respuesta2"></div>
+  </div>
+
+  <div class="card hidden" id="pregunta3">
+    <p><strong>¿Sabes que te amo?</strong></p>
+    <button onclick="final('si')">Sí</button>
+    <button onclick="final('no')">No</button>
+  </div>
+
+  <div class="carta hidden" id="cartaFinal">
+    <h1>Para ti, mi niña</h1>
+    <p>
+      Hoy quiero escribirte algo que venga de mi corazón, sin adornos innecesarios pero lleno de lo que siento. Sé que tuvimos un momento difícil hoy, que las palabras que dije no cayeron bien y que algo en ti se sintió herido. No fue mi intención.
+    </p>
+    <p>
+      Yo no quiero prohibirte nada, tú eres libre y yo te admiro así, tan decidida, tan tú. Pero a veces, aunque podamos hacer lo que queramos, eso no significa que lo que hagamos no tenga efecto en el otro. Y por eso hablo, porque me importas.
+    </p>
+    <p>
+      Confío en ti. Lo sabes. Y no te estaba reclamando porque creyera algo malo, solo me salió hablarlo porque me importas tanto que cualquier cosita me mueve. Sé que te molestaste, y entiendo que no fue fácil escucharlo. Pero quiero que sepas que no hubo maldad en mí, solo amor un poco torpe tal vez, pero genuino.
+    </p>
+    <p>
+      Mañana empiezas algo importante. Y quiero que vayas con la frente en alto, con esa energía tuya que siempre brilla, y que no te falte mi apoyo. Estoy emocionado por ti, por todo lo que vas a vivir. Estoy aquí porque te amo. Y me haces feliz como nadie.
+    </p>
+    <p>
+      Gracias por existir, por ser tú, por quedarte, por enseñarme tantas cosas, incluso cuando discutimos. Te amo con el corazón entero, con los nervios, con el deseo de cuidarte siempre. Ojalá hoy puedas sentir todo eso, aunque haya sido un día raro.
+    </p>
+  </div>
+
+  <div class="pregunta hidden" id="perdonPregunta">
+    <h2>¿Me perdonas y seguimos construyendo esto tan lindo?</h2>
+    <button onclick="alert('Gracias por quedarte. Te prometo siempre hablarte desde el amor.')">Sí, tontito</button>
+    <button onclick="alert('Está bien si necesitas tu espacio, igual aquí estoy esperándote.')">Estoy pensándolo</button>
+  </div>
+
+  <script>
+    let current = 1;
+
+    function mostrarRespuesta(id, texto) {
+      const respuesta = document.getElementById(id);
+      respuesta.innerText = texto;
+      respuesta.classList.remove("hidden");
+
+      setTimeout(() => {
+        document.getElementById(`pregunta${current}`).classList.add("hidden");
+        current++;
+        const siguiente = document.getElementById(`pregunta${current}`);
+        if (siguiente) siguiente.classList.remove("hidden");
+      }, 1500);
+    }
+
+    function final(resp) {
+      document.getElementById('pregunta3').classList.add('hidden');
+      if (resp === 'si') {
+        document.getElementById('cartaFinal').classList.remove('hidden');
+        setTimeout(() => {
+          document.getElementById('perdonPregunta').classList.remove('hidden');
+        }, 2000);
+      } else {
+        const bar = document.getElementById("errorBar");
+        bar.style.display = "block";
+        setTimeout(() => {
+          bar.innerText = "😭 Conexión con tu corazón no encontrada... intenta de nuevo.";
+          document.getElementById('cartaFinal').classList.remove('hidden');
+          document.getElementById('perdonPregunta').classList.remove('hidden');
+        }, 2000);
+      }
+    }
+  </script>
+</body>
+</html>
